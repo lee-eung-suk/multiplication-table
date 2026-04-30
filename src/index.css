@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  html, body {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+}
+
+@layer utilities {
+  .apple-shadow {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  .btn-stage {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-stage:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+  .btn-stage:active:not(:disabled) {
+    transform: translateY(1px);
+    scale: 0.98;
+  }
+}
+
+@media print {
+  body, html {
+    margin: 0;
+    padding: 0;
+    background-color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .app-layout {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+  }
+
+  .interactive-area {
+    display: none !important;
+  }
+
+  .printable-preview {
+    display: block !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .preview-header {
+    display: none !important;
+  }
+
+  .worksheet-page {
+    box-shadow: none !important;
+    padding: 10mm !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    height: auto !important;
+    overflow: visible !important;
+    page-break-after: always;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
