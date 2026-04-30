@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { RefreshCw, Play, Star, Clock, ShieldCheck, Home, Trophy, Sparkles, ChevronRight } from 'lucide-react';
+import { RefreshCw, Play, Star, Clock, ShieldCheck, Home, Trophy, Sparkles, ChevronRight, HelpCircle } from 'lucide-react';
 
 // --- Types ---
-type Screen = 'home' | 'playing' | 'result';
+type Screen = 'home' | 'playing' | 'result' | 'guide';
 type Level = 1 | 2 | 3;
 type BlankType = 'a' | 'b' | 'c' | 'none';
 
@@ -246,9 +246,16 @@ export default function App() {
               exit={{ opacity: 0, y: -10 }}
               className="flex flex-col flex-1 h-full w-full p-6 sm:p-8 space-y-8 overflow-y-auto"
             >
-              <div className="p-2 flex flex-col border-b border-gray-100 pb-6">
+              <div className="p-2 flex flex-col border-b border-gray-100 pb-6 relative">
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">수학 퀘스트</span>
                 <h1 className="text-2xl font-bold text-gray-800 mt-1">신나는 구구단 마스터</h1>
+                <button 
+                  onClick={() => setScreen('guide')}
+                  className="absolute right-2 top-2 p-2 bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-blue-600 rounded-full transition-colors flex items-center justify-center group"
+                  title="앱 사용 안내"
+                >
+                  <HelpCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                </button>
               </div>
 
               {/* Dan Selection */}
@@ -315,6 +322,59 @@ export default function App() {
                 <Play className="w-5 h-5 fill-white" />
                 학습 시작하기
               </button>
+            </motion.div>
+          )}
+
+          {/* --- GUIDE SCREEN --- */}
+          {screen === 'guide' && (
+            <motion.div 
+              key="guide"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="flex flex-col flex-1 h-full w-full p-6 sm:p-8 space-y-6 overflow-y-auto"
+            >
+              <div className="flex items-center pb-4 border-b border-gray-100">
+                <button 
+                  onClick={() => setScreen('home')} 
+                  className="flex items-center text-gray-500 hover:text-gray-800 font-bold transition-colors bg-gray-50 hover:bg-gray-100 px-4 py-2 rounded-xl"
+                >
+                  <ChevronRight className="w-4 h-4 rotate-180 mr-1" /> 되돌아가기
+                </button>
+              </div>
+              
+              <div className="flex flex-col mb-2">
+                <span className="text-xs font-semibold text-blue-500 uppercase tracking-widest mb-1">Guide</span>
+                <h1 className="text-2xl font-extrabold text-gray-800">📖 구구단 퀘스트 안내서</h1>
+              </div>
+
+              <div className="space-y-4">
+                <div className="bg-blue-50/70 p-5 rounded-2xl border border-blue-100">
+                  <h2 className="text-lg font-bold text-blue-800 mb-3 flex items-center gap-2">🎮 이렇게 시작해요!</h2>
+                  <ul className="space-y-2.5 text-base sm:text-[17px] text-blue-900/90 font-medium list-disc list-inside">
+                    <li>공부하고 싶은 <strong className="text-blue-800">구구단 숫자</strong>를 콕! 눌러요.</li>
+                    <li>나에게 맞는 <strong className="text-blue-800">난이도 (1~3단계)</strong>를 선택해요.</li>
+                    <li><strong>[학습 시작하기]</strong> 버튼을 누르면 출발해요! 🚀</li>
+                  </ul>
+                </div>
+
+                <div className="bg-green-50/70 p-5 rounded-2xl border border-green-100">
+                  <h2 className="text-lg font-bold text-green-800 mb-3 flex items-center gap-2">✨ 이런 규칙이 있어요</h2>
+                  <ul className="space-y-2.5 text-base sm:text-[17px] text-green-900/90 font-medium list-disc list-inside">
+                    <li>화면에 보이는 빈칸에 알맞은 숫자를 자판으로 적어주세요.</li>
+                    <li>맞히면 <strong className="text-green-700">초록색!</strong> 딩동댕 🎵 소리가 나요.</li>
+                    <li>틀리면 <strong className="text-red-500">빨간색!</strong> 흔들흔들해요. 다시 고쳐볼 수 있어요.</li>
+                  </ul>
+                </div>
+
+                <div className="bg-purple-50/70 p-5 rounded-2xl border border-purple-100">
+                  <h2 className="text-lg font-bold text-purple-800 mb-3 flex items-center gap-2">🖨️ 종이 학습지로도 풀 수 있어요!</h2>
+                  <ul className="space-y-2.5 text-base sm:text-[17px] text-purple-900/90 font-medium list-disc list-inside">
+                    <li>우측(오른쪽)에 있는 <strong>[학습지 미리보기]</strong> 화면을 보세요.</li>
+                    <li><strong>[인쇄하기]</strong> 버튼을 누르면 종이로 인쇄해서 시험을 볼 수 있어요!</li>
+                  </ul>
+                </div>
+              </div>
             </motion.div>
           )}
 
